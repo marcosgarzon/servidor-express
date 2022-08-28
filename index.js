@@ -37,7 +37,6 @@ app.get('/productos', (request, response) => {
 })
 
 // - B - Ruta get '/productoRandom' que devuelva un producto elegido al azar entre todos los productos disponibles
-let counter = 0
 
 app.get('/productoRandom', (request, response) => {
   let randomValue = arrayHardcode[Math.floor(arrayHardcode.length * Math.random())];
