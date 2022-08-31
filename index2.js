@@ -42,7 +42,7 @@ class Manager {
         if (fs.existsSync(pathToFile)) {
             let data = await fs.promises.readFile(pathToFile, 'utf-8')
             let users = JSON.parse(data)
-            return users
+            return {status: "success", message: users}
         } else {
             return {status: "error", message: err.message}
         }
@@ -64,17 +64,17 @@ let user = {
 
 // - A - Ruta get '/productos' que devuelva un array con todos los productos disponibles en el servidor
 
-let lol = []
-manager.getAll().then(result => lol = result)
-
 app.get('/productos', (request, response) => {
-  response.send(lol)
-})
+    manager.getAll().then(res => response.send(res.message))
+  })
 
 // - B - Ruta get '/productoRandom' que devuelva un producto elegido al azar entre todos los productos disponibles
 
 app.get('/productoRandom', (request, response) => {
-  let randomValue = lol[Math.floor(lol.length * Math.random())];
-  response.send(randomValue)
-})
+  manager.getAll().then(res => {
+  let producto = res.message;
+  let randomValue = producto[Math.floor(producto.length * Math.random())];
+  response.send(randomValue);
+  })});
+
 
